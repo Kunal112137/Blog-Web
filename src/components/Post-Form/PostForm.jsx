@@ -36,36 +36,36 @@ function PostForm({ post }) {
       return;
     }
   
+    let featuredImage = null; // ✅ define once at the top
+  
     try {
-      if (post) {
-        // 🔹 Update existing post
-        let featuredImage = post.featuredImage;
-  
-        if (data.image instanceof File) {
-          const file = await appwriteservice.uploadFile(data.image);
-          if (file) {
-            featuredImage = file.$id;
-          }
-        }
-        
-  
-        const updatedPost = await appwriteservice.updatePost(post.$id, {
-          title: data.title,
-          slug: data.slug,
-          content: data.content,
-          status: data.status,
-          featuredImage,
-        });
-  
-        if (updatedPost) navigate(`/post/${updatedPost.$id}`);
-      } else {
+    if (post) {
+  // Update existing post
+  featuredImage = post.featuredImage;
+
+  if (data.image && data.image[0]) {
+    const file = await appwriteservice.uploadFile(data.image[0]);
+    if (file) {
+      featuredImage =  file.url; // save file id
+    }
+  }
+
+  const updatedPost = await appwriteservice.updatePost(post.$id, {
+    title: data.title,
+    slug: data.slug,
+    content: data.content,
+    status: data.status,
+    featuredImage,
+  });
+
+  if (updatedPost) navigate(`/post/${updatedPost.$id}`);
+}
+ else {
         // 🔹 Create new post
-        let featuredImage = null;
-  
         if (data.image && data.image[0]) {
-          const file = await appwriteservice.uploadFile(data.image[0], userData.$id);
+          const file = await appwriteservice.uploadFile(data.image[0]);
           if (file) {
-            featuredImage = file.$id;
+            featuredImage = file.url; // ✅ use view URL
           }
         }
   
@@ -78,7 +78,8 @@ function PostForm({ post }) {
           userId: userData.$id,
         });
   
-        console.log("DB Response:", dbpost);
+        console.log("✅ Created Post:", dbpost);
+  
         if (dbpost) navigate(`/post/${dbpost.$id}`);
       }
     } catch (err) {
@@ -87,9 +88,12 @@ function PostForm({ post }) {
   
     console.log("✅ Final submit data:", {
       ...data,
-      image: undefined, // remove FileList from log
+      featuredImage, // ✅ now always defined
+      image: undefined,
     });
   };
+  
+  
   
 
 
@@ -172,8 +176,9 @@ function PostForm({ post }) {
 {!preview && post?.featuredImage && (
   <div className="w-full mb-4">
     <img
-      src={appwriteservice.getFilePreview(post.featuredImage)}
-      alt={post.title || "Post Image"}
+   src={post.featuredImage}
+        alt={post.title || "Post Image"}
+ 
       className="rounded-lg"
       style={{ width: "100%", height: "auto" }}
     />
@@ -182,29 +187,7 @@ function PostForm({ post }) {
 
 
 
-        {/* Show preview of new image if selected */}
-        {preview && (
-          <div className="w-full mb-4">
-            <img
-              src={preview}
-              alt="Preview"
-              style={{ width: '100%', height: 'auto', display: 'block' }}
-              className="rounded-lg"
-            />
-          </div>
-        )}
-
-        {/* If editing and no new image chosen, show existing */}
-        {!preview && post?.featuredImage && (
-          <div className="w-full mb-4">
-            <img
-              src={appwriteservice.getFilePreview(post.featuredImage)}
-              alt={post.title || "Post Image"}
-              style={{ width: '100%', height: 'auto', display: 'block' }}
-              className="rounded-lg"
-            />
-          </div>
-        )}
+  
 
         <Select
           options={["active", "inactive"]}

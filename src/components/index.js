@@ -10,8 +10,9 @@ import Input from './Input.jsx';
 import AuthLayout from './AuthLayout.jsx';
 import Button from './Button.jsx';
 import Select from './Select.jsx';
-
+import AddPost from '../pages/AddPost.jsx';
 export {
+  AddPost,
   Header,
   Footer,
   Logo,

@@ -6,15 +6,28 @@ function AllPost() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    appwriteService.getPosts().then((posts) => {
-      if (posts) {
-        setPosts(posts.documents);
+    appwriteService.getPosts().then((res) => {
+      if (res) {
+        // Map posts to include a proper image URL
+        const postsWithImage = res.documents.map((post) => {
+          // Check if featuredimage exists
+          const imageUrl = post.featuredImage
+            ? `https://[YOUR_APPWRITE_ENDPOINT]/v1/storage/buckets/[BUCKET_ID]/files/${post.featuredimage}/view?project=[PROJECT_ID]`
+            : null;
+
+          return {
+            ...post,
+            featuredImage: imageUrl,
+          };
+        });
+
+        setPosts(postsWithImage);
       }
     });
   }, []);
 
   return (
-    <div className="w-full py-8">
+    <div className="w-full py-8 ">
       <Container>
         <div className="flex flex-wrap">
           {posts.map((post) => (

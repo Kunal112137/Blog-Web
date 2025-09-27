@@ -99,27 +99,33 @@ export class Service {
     }
 
     // 🔹 File upload (fixed: no permissions array here)
-    async uploadFile(file, userId) {
-        try {
-          console.log("🚀 Uploading file:", file);
-          const uploaded = await this.bucket.createFile(
-            conf.appwriteBucketId,
-            ID.unique(),
-            file,
-            [
-              Permission.read(Role.any()),          // anyone can view
-              Permission.write(Role.user(userId)),  // owner can edit
-              Permission.delete(Role.user(userId)),
-              Permission.update(Role.user(userId))  // owner can delete
-            ]
-          );
-          console.log("✅ File uploaded successfully:", uploaded);
-          return uploaded;
-        } catch (error) {
-          console.error("❌ Appwrite service :: uploadFile :: error", error);
-          return false;
-        }
+    // 🔹 File upload (returns both id + preview URL)
+    async uploadFile(file) {
+      try {
+        console.log("🚀 Uploading file:", file);
+    
+        const uploaded = await this.bucket.createFile(
+          conf.appwriteBucketId,
+          ID.unique(),
+          file
+        );
+    
+        // 👇 Build preview URL
+        const previewUrl = this.getFileView(uploaded.$id);
+    
+        const result = {
+          id: uploaded.$id,
+          url: previewUrl
+        };
+    
+        console.log("✅ File uploaded successfully:", result);
+        return result;
+      } catch (error) {
+        console.error("❌ Appwrite service :: uploadFile :: error", error);
+        return null;
       }
+    }
+    
       
 
     // 🔹 Delete file
@@ -143,6 +149,14 @@ export class Service {
             fileId
         );
     }
+    // ✅ Add this inside Service class
+getFileView(fileId) {
+  return this.bucket.getFileView(
+    conf.appwriteBucketId,
+    fileId
+  );
+}
+
 }
 
 const service = new Service();

@@ -1,15 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import appwriteService from "../appwrite/config";
-
 function PostCard({ title, featuredImage, $id }) {
   const imageUrl = featuredImage
-    ? appwriteService.getFilePreview(featuredImage)
+    ? featuredImage // already a full URL from AllPost.jsx
     : "https://via.placeholder.com/300x200?text=No+Image";
 
   return (
     <Link to={`/post/${$id}`}>
-      <div className="w-full bg-gray-100 rounded-xl p-4">
+      <div className="w-full bg-gray-600 rounded-xl p-4">
         <div className="w-full justify-center mb-4">
           <img
             src={imageUrl}
@@ -22,5 +21,6 @@ function PostCard({ title, featuredImage, $id }) {
     </Link>
   );
 }
+
 
 export default PostCard;
