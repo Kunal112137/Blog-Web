@@ -21,9 +21,9 @@ function PostForm({ post }) {
   const userData = useSelector(selectUserData);
   const [preview, setPreview] = React.useState(null);
 
-  // 🔹 Handle form submit
-  // 🔹 Handle form submit
-  // 🔹 Handle form submit
+  //  Handle form submit
+  //  Handle form submit
+  //  Handle form submit
   const submit = async (data) => {
     console.log("Submitting to Appwrite:", data);
   
@@ -36,7 +36,7 @@ function PostForm({ post }) {
       return;
     }
   
-    let featuredImage = null; // ✅ define once at the top
+    let featuredImage = null; // define once at the top
   
     try {
     if (post) {
@@ -65,7 +65,7 @@ function PostForm({ post }) {
         if (data.image && data.image[0]) {
           const file = await appwriteservice.uploadFile(data.image[0]);
           if (file) {
-            featuredImage = file.url; // ✅ use view URL
+            featuredImage = file.url; //  use view URL
           }
         }
   
@@ -78,17 +78,17 @@ function PostForm({ post }) {
           userId: userData.$id,
         });
   
-        console.log("✅ Created Post:", dbpost);
+        console.log(" Created Post:", dbpost);
   
         if (dbpost) navigate(`/post/${dbpost.$id}`);
       }
     } catch (err) {
-      console.error("❌ Error while submitting:", err);
+      console.error(" Error while submitting:", err);
     }
   
     console.log("✅ Final submit data:", {
       ...data,
-      featuredImage, // ✅ now always defined
+      featuredImage, //  now always defined
       image: undefined,
     });
   };
@@ -98,7 +98,7 @@ function PostForm({ post }) {
 
 
 
-  // 🔹 Slug generator
+  //  Slug generator
   const slugTransform = useCallback((value) => {
     if (value && typeof value === "string")
       return value
@@ -155,7 +155,7 @@ function PostForm({ post }) {
   onChange={(e) => {
     const file = e.target.files[0];
     if (file) {
-      setPreview(URL.createObjectURL(file)); // ✅ preview works
+      setPreview(URL.createObjectURL(file)); //  preview works
     }
   }}
 />
