@@ -84,18 +84,13 @@ function PostForm({ post }) {
       console.error(" Error while submitting:", err);
     }
   
-    console.log("✅ Final submit data:", {
+    console.log(" Final submit data:", {
       ...data,
       featuredImage, //  now always defined
       image: undefined,
     });
   };
   
-  
-  
-
-
-
   //  Slug generator
   const slugTransform = useCallback((value) => {
     if (value && typeof value === "string")
@@ -182,10 +177,6 @@ function PostForm({ post }) {
     />
   </div>
 )}
-
-
-
-  
 
         <Select
           options={["active", "inactive"]}
