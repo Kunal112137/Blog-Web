@@ -26,14 +26,22 @@ It allows users to create, read, update, and delete blog posts, with route prote
 
 Blog-Web/
 ├── public/ # Static assets
+
 ├── src/
 │ ├── components/ # UI components
+
 │ ├── pages/ # Application pages (Home, Login, etc.)
+
 │ └── ProtectedRoute.jsx # Route protection for authenticated users
+
 ├── .env.sample # Sample environment variables
+
 ├── package.json # Dependencies
+
 ├── tailwind.config.js # Tailwind CSS config
+
 ├── vite.config.js # Vite build config
+
 └── README.md # Project description
 
 
