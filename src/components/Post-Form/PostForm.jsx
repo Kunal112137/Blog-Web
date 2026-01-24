@@ -22,8 +22,6 @@ function PostForm({ post }) {
   const [preview, setPreview] = React.useState(null);
 
   //  Handle form submit
-  //  Handle form submit
-  //  Handle form submit
   const submit = async (data) => {
     console.log("Submitting to Appwrite:", data);
   
