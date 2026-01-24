@@ -5,17 +5,17 @@ It allows users to create, read, update, and delete blog posts, with route prote
 
 ---
 
-## 🚀 Features
+##  Features
 
-- ✍️ **Create & Manage Blogs** – Add, edit, and delete blog posts.  
-- 🔐 **Authentication** – User login & signup with protected routes.  
-- 👤 **User Dashboard** – Manage personal blogs and profile.  
-- 📱 **Responsive Design** – Works across desktop and mobile.  
-- ⚡ **Fast & Optimized** – Built with modern technologies.  
+-  **Create & Manage Blogs** – Add, edit, and delete blog posts.  
+-  **Authentication** – User login & signup with protected routes.  
+-  **User Dashboard** – Manage personal blogs and profile.  
+-  **Responsive Design** – Works across desktop and mobile.  
+-  **Fast & Optimized** – Built with modern technologies.  
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 - **Frontend:** React  
 - **Styling:** Tailwind CSS  
@@ -37,7 +37,7 @@ Blog-Web/
 └── README.md # Project description
 
 
-## ⚙️ Installation & Setup
+## ⚙️Installation & Setup
 
 Clone the repository and install dependencies:
 
@@ -47,5 +47,5 @@ cd Blog-Web
 npm install
 npm run dev
 
-## 📂 Project Structure
+
 
