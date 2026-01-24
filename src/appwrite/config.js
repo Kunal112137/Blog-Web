@@ -15,7 +15,7 @@ export class Service {
         this.bucket = new Storage(this.client);
     }
 
-    // 🔹 Create a new blog post
+    //  Create a new blog post
     async createPost({ title, slug, content, featuredImage, status, userId }) {
         try {
             return await this.databases.createDocument(
@@ -36,13 +36,13 @@ export class Service {
         }
     }
 
-    // 🔹 Update post (use post.$id, not slug)
+    //  Update post (use post.$id, not slug)
     async updatePost(postId, { title, content, featuredImage, status }) {
         try {
             return await this.databases.updateDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
-                postId,   // ✅ must be the document ID
+                postId,   // must be the document ID
                 {
                     title,
                     content,
@@ -55,13 +55,13 @@ export class Service {
         }
     }
 
-    // 🔹 Delete post (use post.$id)
+    //Delete post (use post.$id)
     async deletePost(postId) {
         try {
             await this.databases.deleteDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
-                postId   // ✅ must be the document ID
+                postId   //  must be the document ID
             );
             return true;
         } catch (error) {
@@ -70,7 +70,7 @@ export class Service {
         }
     }
 
-    // 🔹 Get single post
+    //  Get single post
     async getPost(postId) {
         try {
             return await this.databases.getDocument(
@@ -84,7 +84,7 @@ export class Service {
         }
     }
 
-    // 🔹 Get all posts (default: active ones)
+    //  Get all posts (default: active ones)
     async getPosts(queries = []) {
         try {
             return await this.databases.listDocuments(
@@ -98,11 +98,11 @@ export class Service {
         }
     }
 
-    // 🔹 File upload (fixed: no permissions array here)
-    // 🔹 File upload (returns both id + preview URL)
+    //  File upload (fixed: no permissions array here)
+    //  File upload (returns both id + preview URL)
     async uploadFile(file) {
       try {
-        console.log("🚀 Uploading file:", file);
+        console.log("Uploading file:", file);
     
         const uploaded = await this.bucket.createFile(
           conf.appwriteBucketId,
@@ -110,7 +110,7 @@ export class Service {
           file
         );
     
-        // 👇 Build preview URL
+        //  Build preview URL
         const previewUrl = this.getFileView(uploaded.$id);
     
         const result = {
@@ -118,17 +118,17 @@ export class Service {
           url: previewUrl
         };
     
-        console.log("✅ File uploaded successfully:", result);
+        console.log("File uploaded successfully:", result);
         return result;
       } catch (error) {
-        console.error("❌ Appwrite service :: uploadFile :: error", error);
+        console.error(" Appwrite service :: uploadFile :: error", error);
         return null;
       }
     }
     
       
 
-    // 🔹 Delete file
+    //  Delete file
     async deleteFile(fileId) {
         try {
             await this.bucket.deleteFile(
@@ -149,7 +149,7 @@ export class Service {
             fileId
         );
     }
-    // ✅ Add this inside Service class
+    //  Add this inside Service class
 getFileView(fileId) {
   return this.bucket.getFileView(
     conf.appwriteBucketId,
