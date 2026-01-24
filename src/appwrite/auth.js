@@ -38,7 +38,7 @@ export class AuthService {
         try {
             return await this.account.get();
         } catch (error) {
-            // 👇 FIXED: don't throw error for guests
+            
             return null;
         }
     }
